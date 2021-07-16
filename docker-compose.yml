@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  web_gitea:
+    image: gitea/gitea:latest
+    volumes:
+      - ./gitea:/data
+    ports:
+      - "3000:3000"
+      - "2221:22"
+    networks:
+      - git_net
+
+  youtrack:
+    image: jetbrains/youtrack:2021.3.21051
+    volumes:
+      - ./youtrack/data:/opt/youtrack/data
+      - ./youtrack/conf:/opt/youtrack/conf
+      - ./youtrack/logs:/opt/youtrack/logs
+      - ./youtrack/backups:/opt/youtrack/backups
+    ports:
+      - "8080:8080"
+    networks:
+      - git_net
+
+networks:
+  git_net:
+    external: true
